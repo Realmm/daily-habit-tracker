@@ -94,9 +94,13 @@ const update = async (
   if (habit === undefined) return false;
   console.log('a2')
   const habitsWithoutOldHabit = habits.filter((h) => h.id !== id);
+  console.log('a2x1')
   let days = (habit as any)?.days === undefined ? [] : (habit as any)?.days;
+  console.log('a2x2')
   if (day !== undefined) {
+  console.log('a2x3')
     if (addDay) {
+  console.log('a2x4')
       days.push({
         day: day.date.getUTCDate(),
         month: day.date.getUTCMonth(),
