@@ -69,6 +69,11 @@ export const setHabits = async (
   habits: Habit[]
 ): Promise<boolean> => {
   const c = await habitColl();
+  console.log('a4')
+  console.log(address)
+  console.log('a4a')
+  console.log(habits)
+  console.log('a4b')
   const res = await c.updateOne(
     {
       id: address,
@@ -82,5 +87,8 @@ export const setHabits = async (
       upsert: true,
     }
   );
+  console.log('a5')
+  console.log(res.acknowledged)
+  console.log('a6')
   return res.acknowledged;
 };
