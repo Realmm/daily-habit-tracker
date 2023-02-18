@@ -89,7 +89,9 @@ const update = async (
 ): Promise<boolean> => {
   const habits = await getHabits(address);
   const habit = habits.find((h) => h.id === id);
+  console.log('a1')
   if (habit === undefined) return false;
+  console.log('a2')
   const habitsWithoutOldHabit = habits.filter((h) => h.id !== id);
   let days = (habit as any)?.days === undefined ? [] : (habit as any)?.days;
   if (day !== undefined) {
