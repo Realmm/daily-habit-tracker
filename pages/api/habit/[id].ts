@@ -69,7 +69,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
   } catch (e: any) {
-    console.log('error')
+    console.log("error");
     res.status(400);
     res.send(false);
   }
@@ -90,17 +90,17 @@ const update = async (
 ): Promise<boolean> => {
   const habits = await getHabits(address);
   const habit = habits.find((h) => h.id === id);
-  console.log('a1')
+  console.log("a1");
   if (habit === undefined) return false;
-  console.log('a2')
+  console.log("a2");
   const habitsWithoutOldHabit = habits.filter((h) => h.id !== id);
-  console.log('a2x1')
+  console.log("a2x1");
   let days = (habit as any)?.days === undefined ? [] : (habit as any)?.days;
-  console.log('a2x2')
+  console.log("a2x2");
   if (day !== undefined) {
-  console.log('a2x3')
+    console.log("a2x3");
     if (addDay) {
-  console.log('a2x4')
+      console.log("a2x4");
       days.push({
         day: day.date.getUTCDate(),
         month: day.date.getUTCMonth(),
@@ -108,13 +108,21 @@ const update = async (
         success: day.success,
       });
     } else {
+      console.log("a2x5");
       const foundDay = days.find(
         (d: any) =>
           d.day === day.date.getUTCDate() &&
           d.month === day.date.getUTCMonth() &&
           d.year === day.date.getUTCFullYear()
       );
+      console.log("days1");
+      console.log('dayA: ' + day.date.getUTCDate());
+      console.log('dayB: ' + day.date.getUTCMonth());
+      console.log('dayC: ' + day.date.getUTCFullYear());
+      console.log("days2");
+      console.log("founDay: " + foundDay);
       if (!foundDay) return false;
+      console.log("a2x6");
       const daysWithoutFoundDay = days.filter(
         (d: any) =>
           d.day !== foundDay.day ||
@@ -137,7 +145,7 @@ const update = async (
     days: day === undefined ? habit.days : days,
   };
   habitsWithoutOldHabit.push(updatedHabit);
-  console.log('a3')
+  console.log("a3");
   return setHabits(address, habitsWithoutOldHabit);
 };
 
