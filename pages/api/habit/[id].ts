@@ -69,6 +69,7 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
   } catch (e: any) {
+    console.log('error')
     res.status(400);
     res.send(false);
   }
