@@ -31,11 +31,21 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.query.id as string;
   try {
     const day = req.body?.day;
+    console.log('day1: ' + day?.year)
+    console.log('day2: ' + day?.month)
+    console.log('day3: ' + day?.day)
+
+    console.log(req.body)
+    console.log('day4:')
     const dayDate: Day | undefined =
       day === undefined
         ? undefined
         : {
-            date: new Date(day.year, day.month, day.day + 1),
+            date: {
+              day: day.day,
+              month: day.month,
+              year: day.year
+            },
             success: day.success === undefined ? undefined : day.success,
           };
     if (req.method === "POST") {
@@ -69,14 +79,17 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
       return;
     }
   } catch (e: any) {
-    console.log("error");
     res.status(400);
     res.send(false);
   }
 };
 
 type Day = {
-  date: Date;
+  date: {
+    day: number,
+    month: number,
+    year: number
+  };
   success: boolean | undefined;
 };
 
@@ -102,23 +115,24 @@ const update = async (
     if (addDay) {
       console.log("a2x4");
       days.push({
-        day: day.date.getUTCDate(),
-        month: day.date.getUTCMonth(),
-        year: day.date.getUTCFullYear(),
+        day: day.date.day,
+        month: day.date.month,
+        year: day.date.year,
         success: day.success,
       });
     } else {
       console.log("a2x5");
+      console.log(day.date);
       const foundDay = days.find(
         (d: any) =>
-          d.day === day.date.getUTCDate() &&
-          d.month === day.date.getUTCMonth() &&
-          d.year === day.date.getUTCFullYear()
+          d.day === day.date.day &&
+          d.month === day.date.month &&
+          d.year === day.date.year
       );
       console.log("days1");
-      console.log('dayA: ' + day.date.getUTCDate());
-      console.log('dayB: ' + day.date.getUTCMonth());
-      console.log('dayC: ' + day.date.getUTCFullYear());
+      console.log('dayA: ' + day.date.day);
+      console.log('dayB: ' + day.date.month);
+      console.log('dayC: ' + day.date.year);
       console.log("days2");
       console.log("founDay: " + foundDay);
       if (!foundDay) return false;
@@ -162,9 +176,9 @@ const del = async (
   const days = (habit as any)?.days;
   const daysWithoutDay = days.filter(
     (d: any) =>
-      d.day !== day.date.getUTCDate() ||
-      d.month !== day.date.getUTCMonth() ||
-      d.year !== day.date.getUTCFullYear()
+      d.day !== day.date.day ||
+      d.month !== day.date.month ||
+      d.year !== day.date.year
   );
   (habit as any).days = daysWithoutDay;
   habitsWithoutOldHabit.push(habit);

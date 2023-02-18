@@ -30,7 +30,9 @@ const TrackerDays = (props: TrackerDaysProps) => {
     const date = getDate();
     const elements = [];
     for (let i = 1; i <= daysInMonth; i++) {
-      const day = props.habit.days?.find((d: any) => d.day === i && d.month === props.month);
+      const day = props.habit.days?.find(
+        (d: any) => d.day === i && d.month === props.month
+      );
       elements.push(
         <TrackerDay
           habits={props.habits}
@@ -132,6 +134,7 @@ const TrackerDay = (props: TrackerDayProps) => {
     let r: any | undefined;
     const newSuccess =
       oldSuccess === undefined ? true : oldSuccess ? false : undefined;
+
     const newDayView = {
       day: props.dayView.day,
       month: props.dayView.month,
@@ -139,7 +142,7 @@ const TrackerDay = (props: TrackerDayProps) => {
       success: newSuccess,
     };
     const body = JSON.stringify({
-      day: newDayView,
+      day: newDayView
     });
     const headers = { "Content-Type": "application/json" };
     const habitRes = await fetch(`/api/habit/${props.habit.id}`, {
@@ -167,12 +170,13 @@ const TrackerDay = (props: TrackerDayProps) => {
     });
     if (!res.ok) revert();
 
-    const daysWithoutOldDay = dbHabit?.days === undefined ? [] : dbHabit?.days?.filter(
-      (d: any) => d.day !== props.dayView.day
-    );
+    const daysWithoutOldDay =
+      dbHabit?.days === undefined
+        ? []
+        : dbHabit?.days?.filter((d: any) => d.day !== props.dayView.day);
     daysWithoutOldDay.push(newDayView);
     dbHabit.days = daysWithoutOldDay;
-    const removedHabits = props.habits.filter(h => h.id !== props.habit.id);
+    const removedHabits = props.habits.filter((h) => h.id !== props.habit.id);
     removedHabits.push(dbHabit);
     props.setHabits(removedHabits);
   };
@@ -197,7 +201,9 @@ const TrackerDay = (props: TrackerDayProps) => {
   }, []);
 
   useEffect(() => {
-    const day = props.habit.days?.find((d: any) => d.day === props.dayView.day && d.month === props.dayView.month);
+    const day = props.habit.days?.find(
+      (d: any) => d.day === props.dayView.day && d.month === props.dayView.month
+    );
     if (
       day === undefined ||
       day.success === null ||
@@ -216,7 +222,9 @@ const TrackerDay = (props: TrackerDayProps) => {
       <button
         onClick={clickedButton}
         className={
-          (getDaysInMonth(props.dayView.month) === props.dayView.day ? "" : "border-r-2 ") +
+          (getDaysInMonth(props.dayView.month) === props.dayView.day
+            ? ""
+            : "border-r-2 ") +
           (done ? "bg-green-400 " : notDone ? "bg-red-400 " : "") +
           "w-full"
         }
