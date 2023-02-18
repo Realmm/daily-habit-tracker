@@ -12,10 +12,10 @@ const Home: NextPage = () => {
   const [habits, setHabits] = useState<Habit[] | undefined>();
 
   const updateHabits = async () => {
-    const addressRes = await fetch('/api/auth/me', {
-      method: 'GET'
-    }) 
-    const addressFound = (await addressRes.json()).address
+    const addressRes = await fetch("/api/auth/me", {
+      method: "GET",
+    });
+    const addressFound = (await addressRes.json()).address;
     if (address === undefined || addressFound === undefined) {
       setHabits([]);
       setLoading(true);
@@ -57,31 +57,32 @@ const Home: NextPage = () => {
 
   return (
     <>
-      <div className="w-full h-full min-h-screen bg-gradient-to-br from-blue-500 to-purple-900">
+      <div className="w-max min-w-full h-full min-h-screen bg-gradient-to-br from-blue-500 to-purple-900">
         <div className="bg-black min-h-screen bg-opacity-30">
-        <ConnectWalletButton
-          onDisconnect={() => {
-            updateHabits();
-          }}
-          onSignIn={() => {
-            updateHabits();
-          }}
-        />
-        <div className="py-4 px-6 text-3xl text-white">
-          <span>Daily Habit Tracker</span>
+          <div className="sticky">
+            <ConnectWalletButton
+              onDisconnect={() => {
+                updateHabits();
+              }}
+              onSignIn={() => {
+                updateHabits();
+              }}
+            />
+            <div className="py-4 px-6 text-3xl text-white">
+              <span>Daily Habit Tracker</span>
+            </div>
+          </div>
+          <Tracker
+            loading={loading}
+            habits={habits === undefined ? [] : habits}
+            setHabits={(newHabits) => {
+              const array = [...newHabits];
+              const sorted = sortHabits(array);
+              setHabits(sorted);
+            }}
+          />
+          <Loading loading={loading} />
         </div>
-        <Tracker
-          loading={loading}
-          habits={habits === undefined ? [] : habits}
-          setHabits={(newHabits) => {
-            const array = [...newHabits];
-            const sorted = sortHabits(array);
-            setHabits(sorted);
-          }}
-        />
-        <Loading loading={loading} />
-        </div>
-        
       </div>
     </>
   );

@@ -169,16 +169,6 @@ const TrackerDay = (props: TrackerDayProps) => {
       body,
     });
     if (!res.ok) revert();
-
-    const daysWithoutOldDay =
-      dbHabit?.days === undefined
-        ? []
-        : dbHabit?.days?.filter((d: any) => d.day !== props.dayView.day);
-    daysWithoutOldDay.push(newDayView);
-    dbHabit.days = daysWithoutOldDay;
-    const removedHabits = props.habits.filter((h) => h.id !== props.habit.id);
-    removedHabits.push(dbHabit);
-    props.setHabits(removedHabits);
   };
 
   const clickedButton = async () => {

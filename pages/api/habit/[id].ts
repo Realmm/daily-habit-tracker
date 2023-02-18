@@ -1,6 +1,6 @@
 import { NextApiRequest, NextApiResponse } from "next";
 import ironSessionApiRoute from "../../../scripts/ironSessionApiRoute";
-import { Habit, getHabit, getHabits, setHabits } from "../../../scripts/mongo";
+import { getHabit, getHabits, setHabits } from "../../../scripts/mongo";
 
 export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const address = req.session?.siwe?.address;
@@ -31,12 +31,6 @@ export const handler = async (req: NextApiRequest, res: NextApiResponse) => {
   const id = req.query.id as string;
   try {
     const day = req.body?.day;
-    console.log('day1: ' + day?.year)
-    console.log('day2: ' + day?.month)
-    console.log('day3: ' + day?.day)
-
-    console.log(req.body)
-    console.log('day4:')
     const dayDate: Day | undefined =
       day === undefined
         ? undefined
@@ -103,17 +97,11 @@ const update = async (
 ): Promise<boolean> => {
   const habits = await getHabits(address);
   const habit = habits.find((h) => h.id === id);
-  console.log("a1");
   if (habit === undefined) return false;
-  console.log("a2");
   const habitsWithoutOldHabit = habits.filter((h) => h.id !== id);
-  console.log("a2x1");
   let days = (habit as any)?.days === undefined ? [] : (habit as any)?.days;
-  console.log("a2x2");
   if (day !== undefined) {
-    console.log("a2x3");
     if (addDay) {
-      console.log("a2x4");
       days.push({
         day: day.date.day,
         month: day.date.month,
@@ -121,22 +109,13 @@ const update = async (
         success: day.success,
       });
     } else {
-      console.log("a2x5");
-      console.log(day.date);
       const foundDay = days.find(
         (d: any) =>
           d.day === day.date.day &&
           d.month === day.date.month &&
           d.year === day.date.year
       );
-      console.log("days1");
-      console.log('dayA: ' + day.date.day);
-      console.log('dayB: ' + day.date.month);
-      console.log('dayC: ' + day.date.year);
-      console.log("days2");
-      console.log("founDay: " + foundDay);
       if (!foundDay) return false;
-      console.log("a2x6");
       const daysWithoutFoundDay = days.filter(
         (d: any) =>
           d.day !== foundDay.day ||
@@ -159,7 +138,6 @@ const update = async (
     days: day === undefined ? habit.days : days,
   };
   habitsWithoutOldHabit.push(updatedHabit);
-  console.log("a3");
   return setHabits(address, habitsWithoutOldHabit);
 };
 

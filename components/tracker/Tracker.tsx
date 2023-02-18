@@ -42,7 +42,7 @@ const Tracker = (props: TrackerProps) => {
     <>
       <div
         className={
-          (props.loading ? "hidden " : "") + "flex justify-center mt-24"
+          (props.loading ? "hidden " : "") + "flex justify-center pt-24"
         }
       >
         <div className="w-full m-auto mx-10 rounded-lg flex">
