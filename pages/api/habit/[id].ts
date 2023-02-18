@@ -132,6 +132,7 @@ const update = async (
     days: day === undefined ? habit.days : days,
   };
   habitsWithoutOldHabit.push(updatedHabit);
+  console.log('a3')
   return setHabits(address, habitsWithoutOldHabit);
 };
 
