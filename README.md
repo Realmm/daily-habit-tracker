@@ -1,5 +1,8 @@
 # Daily Habit Tracker
 
+## To view live version
+https://daily-habit-tracker.vercel.app/
+
 ## Purpose
 To track your habits daily, through a calendar view
 
