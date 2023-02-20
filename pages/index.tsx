@@ -11,12 +11,12 @@ const Home: NextPage = () => {
   const [loading, setLoading] = useState(true);
   const [habits, setHabits] = useState<Habit[] | undefined>();
 
-  const updateHabits = async () => {
+  const updateHabits = async (signedOut: boolean) => {
     const addressRes = await fetch("/api/auth/me", {
       method: "GET",
     });
     const addressFound = (await addressRes.json()).address;
-    if (address === undefined || addressFound === undefined) {
+    if (signedOut || address === undefined || addressFound === undefined) {
       console.log('test')
       setHabits([]);
       setLoading(true);
@@ -47,11 +47,11 @@ const Home: NextPage = () => {
   };
 
   useEffect(() => {
-    updateHabits();
+    updateHabits(false);
   }, []);
 
   useEffect(() => {
-    updateHabits();
+    updateHabits(false);
   }, [address]);
 
   useEffect(() => {}, [habits, loading]);
@@ -63,10 +63,10 @@ const Home: NextPage = () => {
           <div className="sticky">
             <ConnectWalletButton
               onDisconnect={() => {
-                updateHabits();
+                updateHabits(true);
               }}
               onSignIn={() => {
-                updateHabits();
+                updateHabits(false);
               }}
             />
             <div className="py-4 px-6 text-3xl text-white">
