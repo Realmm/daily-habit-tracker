@@ -137,7 +137,9 @@ const SignInButton = (props: SignInProps) => {
         <div>{truncated}</div>
         <button
           onClick={async () => {
-            const loggedOut = await fetch("/api/auth/logout");
+            const loggedOut = await fetch("/api/auth/logout", {
+              method: 'GET'
+            });
             if (loggedOut) {
               props.clearConnectAddress();
             }
