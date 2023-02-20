@@ -36,6 +36,7 @@ const Tracker = (props: TrackerProps) => {
   }, []);
 
   useEffect(() => {
+    console.log('tracker loading? ' + props.loading)
     
   }, [date, props.loading, month]);
   return (

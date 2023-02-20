@@ -17,6 +17,7 @@ const Home: NextPage = () => {
     });
     const addressFound = (await addressRes.json()).address;
     if (address === undefined || addressFound === undefined) {
+      console.log('test')
       setHabits([]);
       setLoading(true);
       return;
